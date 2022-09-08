@@ -1,0 +1,126 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+
+    // add node support
+    id "com.github.node-gradle.node" version "3.1.1"
+}
+
+group = 'com.lkws.ttt'
+version = '1.0.0'
+sourceCompatibility = '17'
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // MySQL
+    implementation 'mysql:mysql-connector-java'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    // Hibernate
+    implementation 'org.hibernate.validator:hibernate-validator'
+
+    // OpenAPI
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+}
+
+buildDir = 'build'
+
+processResources {
+    dependsOn('copyFrontendToBuild')
+}
+
+task copyFrontendToBuild(type: Copy) {
+    dependsOn('npmBuild')
+    from("frontend/build")
+    into("${buildDir}/resources/main/static")
+}
+
+node {
+    // automatically downloads node instead of using node installed on system
+    download = true
+
+    version = '16.15.1'
+    npmVersion = '8.13.1'
+
+    // directory of node installation
+    workDir = file("${project.projectDir}/.gradle/nodejs")
+
+    // directory of npm installation
+    npmWorkDir = file("${project.projectDir}/.gradle/npm")
+
+    // directory of node_modules
+    nodeProjectDir = file("${project.projectDir}/frontend")
+}
+
+task npmForceInstall(type: NpmTask) {
+    args = ['install', '--force']
+}
+
+// Build the frontend
+task npmBuild(type: NpmTask) {
+    // Only build the frontend if one of the following files change
+    inputs.files(fileTree("frontend/node_modules"))
+    inputs.files(fileTree("frontend/src"))
+    inputs.file("frontend/package.json")
+
+    outputs.dir("build/resources/main/static")
+
+    dependsOn(npmForceInstall)
+
+    args = ['run', 'build']
+}
+
+// Clean install of dependencies
+task npmCleanInstall(type: NpmTask) {
+    dependsOn('npmSetup')
+    args = ['ci', '--force']
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'backend/src/main/java'
+        }
+        resources {
+            srcDir 'backend/src/main/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'backend/src/test/java'
+        }
+        resources {
+            'backend/src/test/resources'
+        }
+    }
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+test {
+    defaultCharacterEncoding = 'UTF-8'
+    useJUnitPlatform()
+}

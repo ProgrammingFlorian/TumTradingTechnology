@@ -1,0 +1,13 @@
+.shareDetailPageComponent {
+    font-family: Helvetica, monospace;
+}
+
+.infoText {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #2d2d2d;
+}
+
+.coloredBox {
+    background-color: #1a1a1a;
+}

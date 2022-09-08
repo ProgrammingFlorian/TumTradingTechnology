@@ -1,0 +1,10 @@
+.chosen {
+    background-color: rgba(35, 35, 35, 0.9);
+}
+
+.portfolioQuantity {
+    background-color: rgba(35, 35, 35, 0.9);
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 8px;
+    font-size: medium;
+}

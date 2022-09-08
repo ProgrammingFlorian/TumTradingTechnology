@@ -1,0 +1,10 @@
+.hover-btn:hover {
+    background-color: rgba(35, 35, 35, 0.9);
+    color: white;
+    opacity: 50;
+}
+
+.hover-btn {
+    color: rgba(255, 255, 255, 0.85);
+    opacity: 50;
+}
