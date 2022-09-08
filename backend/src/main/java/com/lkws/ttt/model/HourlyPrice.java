@@ -17,7 +17,7 @@ import java.util.Objects;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "hourlyPrice")
+@Table(name = "hourly_price")
 public class HourlyPrice {
 
     @Id
@@ -25,7 +25,7 @@ public class HourlyPrice {
     private long id;
 
     @NotNull(message = "shareId not found")
-    @Column(name = "shareId")
+    @Column(name = "share_id")
     private long shareId;
 
     @Column(name = "date_time")

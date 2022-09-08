@@ -41,7 +41,7 @@ dependencies {
     implementation 'org.hibernate.validator:hibernate-validator'
 
     // OpenAPI
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
 }
 
 buildDir = 'build'

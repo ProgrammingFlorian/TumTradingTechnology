@@ -3,7 +3,7 @@
 ## Setup
 
 - Install MySQL / MariaDB
-- Run following commands to create user and database
+- Run following commands to create user and database:
 ```mysql
 CREATE DATABASE ttt;
 

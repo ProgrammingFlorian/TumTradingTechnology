@@ -16,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "shareInfo")
+@Table(name = "share_info")
 public class ShareInfo {
 
     @Id

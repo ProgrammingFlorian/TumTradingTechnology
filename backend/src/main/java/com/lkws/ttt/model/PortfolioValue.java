@@ -25,7 +25,7 @@ public class PortfolioValue {
     private long id;
 
     @NotNull(message = "userId not found")
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private long userId;
 
     @NotBlank(message = "date not found")

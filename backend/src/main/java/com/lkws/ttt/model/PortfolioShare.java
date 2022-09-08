@@ -26,11 +26,11 @@ public class PortfolioShare {
     private long id;
 
     @NotNull(message = "shareId not found")
-    @Column(name = "shareId")
+    @Column(name = "share_id")
     private long shareId;
 
     @NotNull(message = "userId not found")
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private long userId;
 
     @NotBlank(message = "date not found")
@@ -48,7 +48,7 @@ public class PortfolioShare {
     public enum shareState {BOUGHT, SOLD}
 
     @NotNull(message = "shareOrderType not found")
-    @Column(name = "orderType")
+    @Column(name = "order_type")
     private shareState orderType;
 
     public PortfolioShare(long shareId, long userId, LocalDateTime date, double price, long quantity, String orderType) {
